@@ -1,9 +1,14 @@
 import React from 'react'
 
+
+const styleImage = {
+    width: '45vw',
+    height: '60vh'
+}
 const Image = (props) => {
   return (
 
-        <img src={props.imageURL} alt=""/>
+        <img style={styleImage} src={props.imageURL} alt=""/>
 
   )
 }

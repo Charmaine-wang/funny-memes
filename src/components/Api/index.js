@@ -12,70 +12,60 @@ class Api extends Component  {
         this.state = {
           topText: "",
           bottomText: "",
-          funMemes: [],
-          
+          funMemes: [], 
         }
-        this.handleChange = this.handleChange.bind(this)
-        
+        this.handleChange = this.handleChange.bind(this)  
       }
     
       componentDidMount() {
-          this.fetchAdvice() 
-          
-       
-
+          this.fetchMemeApi() 
       }
-            fetchAdvice = () => {
-              fetch("https://api.imgflip.com/get_memes")
-              .then(response => response.json())
-              .then(data =>  {
-                this.setState({
-                  funMemes: data.data.memes[Math.floor(Math.random() * (data.data.memes.length) + 1)]
-                  })
-                   })
-             }
+        
+      fetchMemeApi = () => {
+            fetch("https://api.imgflip.com/get_memes")
+            .then(response => response.json())
+            .then(data =>  {
+            this.setState({
+                funMemes: data.data.memes[Math.floor(Math.random() * (data.data.memes.length) + 1)]
+                })
+             })
+        }
 
        handleChange = (event)  => {
         const {name, value} = event.target
           this.setState({ 
             [name]: value
-        
         })
     }
     
-
     render(){ 
-  
-
         return (
-            <div className="api-contaioner">
-              <form className="meme-form" onSubmit={this.fetchAdvice} >
-                    <input 
-                        type="text"
-                        name="topText"
-                        placeholder="Top Text"
-                        value={this.state.topText}
-                        onChange={this.handleChange}
-                    /> 
-                    <input 
-                        type="text"
-                        name="bottomText"
-                        placeholder="Bottom Text"
-                        value={this.state.bottomText}
-                        onChange={this.handleChange}
-                    /> 
-
-                <Button>Get new image</Button> 
-              </form>
+            <div className="api-container">
                 <Image imageURL={this.state.funMemes.url}/>
-
                 <TopText topText={this.state.topText} />  
                 <BottomText bottomText={this.state.bottomText}/>
            
+              <form className="meme-form" onSubmit={this.fetchMemeApi} >
+                 <input 
+                    type="text"
+                    name="topText"
+                    placeholder="Top Text"
+                    value={this.state.topText}
+                    onChange={this.handleChange}
+                 /> 
+                 <input 
+                    type="text"
+                    name="bottomText"
+                    placeholder="Bottom Text"
+                    value={this.state.bottomText}
+                    onChange={this.handleChange}
+                 /> 
+                <Button>Get new image</Button> 
+              </form>
 
             </div>
         )
-}
+    }
 }
 
 export default Api
